@@ -97,11 +97,12 @@ RUN curl -fsSL "https://get.sdkman.io" | bash \
 # above, we are adding the sdkman init to .bashrc (executing sdkman-init.sh does that), because one is executed on interactive shells, the other for non-interactive shells (e.g. plugin-host)
 ENV GRADLE_USER_HOME=/workspace/.gradle/
                     
-USER gitpod
-
+USER root
 # Install Xvfb, JavaFX-helpers and Openbox window manager
 RUN apt-get install -yq xvfb x11vnc xterm openjfx libopenjfx-java openbox \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+
+USER gitpod
 
 # overwrite this env variable to use a different window manager
 ENV WINDOW_MANAGER="openbox"
