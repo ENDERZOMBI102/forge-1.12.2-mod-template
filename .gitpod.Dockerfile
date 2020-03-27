@@ -1,4 +1,5 @@
 FROM buildpack-deps:disco
+ARG DEBIAN_FRONTEND=noninteractive
 USER root
 # update the lists
 RUN apt-get update
