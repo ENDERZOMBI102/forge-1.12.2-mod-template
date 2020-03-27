@@ -28,8 +28,7 @@ ENV LANG=en_US.UTF-8
 
 ### Git ###
 RUN add-apt-repository -y ppa:git-core/ppa \
-    && apt-get install -yq git \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -yq git
 
 ### Gitpod user ###
 # '-l': see https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
@@ -63,8 +62,7 @@ RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
         clangd \
         gdb \
         lld \
-    && cp /var/lib/dpkg/status /var/lib/apt/dazzle-marks/lang-c.status \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+    && cp /var/lib/dpkg/status /var/lib/apt/dazzle-marks/lang-c.status
 
 ### Homebrew ###
 LABEL dazzle/layer=tool-brew
@@ -99,9 +97,7 @@ ENV GRADLE_USER_HOME=/workspace/.gradle/
                     
 USER root
 # Install Xvfb, JavaFX-helpers and Openbox window manager
-RUN apt-get update \
-    && apt-get install -yq xvfb x11vnc xterm openjfx libopenjfx-java openbox \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+RUN apt-get install -yq xvfb x11vnc xterm openjfx libopenjfx-java openbox
 
 USER gitpod
 
@@ -130,7 +126,7 @@ RUN sudo ln -sfn /home/linuxbrew/.linuxbrew/opt/openjdk/libexec/openjdk.jdk /Lib
 RUN echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk/bin:$PATH"' >> ~/.bash_profile
 # for c/c++ compilers (because yes)
 RUN export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openjdk/include"
-# remove all apt tmp files
+# remove all apt tmp and list files
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 # if there's already a shell, clear it
 RUN clear
