@@ -100,8 +100,7 @@ ENV GRADLE_USER_HOME=/workspace/.gradle/
 USER gitpod
 
 # Install Xvfb, JavaFX-helpers and Openbox window manager
-RUN apt-get update \
-    && apt-get install -yq xvfb x11vnc xterm openjfx libopenjfx-java openbox \
+RUN apt-get install -yq xvfb x11vnc xterm openjfx libopenjfx-java openbox \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # overwrite this env variable to use a different window manager
