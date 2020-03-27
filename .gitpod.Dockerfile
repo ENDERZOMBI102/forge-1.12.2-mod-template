@@ -1,4 +1,7 @@
 FROM buildpack-deps:disco
+USER root
+# update the lists
+RUN apt-get update
 ### base ###
 RUN yes | unminimize \
     && apt-get install -yq \
@@ -19,8 +22,7 @@ RUN yes | unminimize \
         multitail \
         lsof \
     && locale-gen en_US.UTF-8 \
-    && mkdir /var/lib/apt/dazzle-marks \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+    && mkdir /var/lib/apt/dazzle-marks
 
 ENV LANG=en_US.UTF-8
 
@@ -127,5 +129,8 @@ RUN sudo ln -sfn /home/linuxbrew/.linuxbrew/opt/openjdk/libexec/openjdk.jdk /Lib
 RUN echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/openjdk/bin:$PATH"' >> ~/.bash_profile
 # for c/c++ compilers (because yes)
 RUN export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/openjdk/include"
+# remove all apt tmp files
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 # if there's already a shell, clear it
 RUN clear
+
